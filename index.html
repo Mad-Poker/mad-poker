@@ -1,3 +1,232 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head><meta charset="UTF-8"><title>КУКАРЕКУ</title></head><body><h1>КУКАРЕКУ — ЛОББИ</h1></body></html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>БЕЗУМНЫЙ ПОКЕР · ЛОББИ</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded@5/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/unbounded@5/700.css">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bangers&family=Rubik+Glitch&family=Rubik+Mono+One&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0616;--panel:#150c26;--panel2:#1d1136;--line:rgba(255,255,255,.09);--pink:#ff2e88;--cyan:#25e7ff;--lime:#b8ff3d;--gold:#ffc93c;--violet:#8a5cff;--text:#f4eefc;--muted:#a79fc0;}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(1200px 600px at 80% -10%,rgba(138,92,255,.18),transparent 60%),radial-gradient(900px 500px at 10% 110%,rgba(255,46,136,.14),transparent 60%),var(--bg);color:var(--text);font-family:'Rubik',system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+::selection{background:var(--pink);color:#08040f}
+#fx{position:fixed;inset:0;z-index:0;pointer-events:none}
+.scanlines{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.5;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px)}
+.vignette{position:fixed;inset:0;z-index:59;pointer-events:none;background:radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(0,0,0,.55) 100%)}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 20px;background:rgba(10,6,22,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{font-family:'Unbounded';font-weight:900;font-size:18px;letter-spacing:1px;cursor:pointer;color:#fff;text-shadow:2px 0 var(--pink),-2px 0 var(--cyan);line-height:1}
+.logo span{color:var(--pink)}
+.logo small{display:block;font-family:'Rubik';font-weight:500;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:4px;text-shadow:none}
+.hero{padding:52px 20px 6px;text-align:center}
+.glitch-title{font-family:'Unbounded';font-weight:900;font-size:clamp(26px,5vw,60px);letter-spacing:2px;position:relative;color:#fff;animation:glitchShift 2.8s infinite steps(6)}
+.glitch-sub{margin-top:14px;font-size:11px;letter-spacing:5px;color:var(--muted);font-weight:700}
+@keyframes glitchShift{0%,85%,100%{transform:translate(0,0)}10%{transform:translate(-4px,3px)}20%{transform:translate(4px,-2px)}35%{transform:translate(-2px,-3px);filter:hue-rotate(45deg)}50%{transform:translate(3px,4px);filter:hue-rotate(-45deg)}65%{transform:translate(-3px,2px)}75%{transform:translate(2px,-4px)}}
+.hero-note{display:inline-block;margin-top:18px;padding:8px 16px;border:1px dashed var(--pink);border-radius:999px;color:var(--pink);font-size:12px;font-weight:500;animation:notePulse 2.4s ease-in-out infinite}
+@keyframes notePulse{50%{box-shadow:0 0 22px rgba(255,46,136,.45);background:rgba(255,46,136,.06)}}
+.rooms{max-width:1460px;margin:0 auto;padding:34px 20px 10px;display:grid;gap:18px;grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1120px){.rooms{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.rooms{grid-template-columns:1fr}}
+.room{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:box-shadow .3s,border-color .3s}
+.room:hover{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 24px 60px -22px var(--gold)}
+.room-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000}
+.room-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.room:hover .room-media img{transform:scale(1.06) rotate(.4deg)}
+.media-scan{position:absolute;inset:0;pointer-events:none;opacity:.35;background:repeating-linear-gradient(0deg,rgba(0,0,0,.3) 0 2px,transparent 2px 4px)}
+.ver{position:absolute;top:10px;left:10px;font-family:'Unbounded';font-weight:700;font-size:10px;letter-spacing:1px;padding:4px 9px;border-radius:8px;background:rgba(0,0,0,.6);color:var(--gold);border:1px solid var(--gold);z-index:2}
+.live{position:absolute;top:10px;right:10px;z-index:2;display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:2px;color:#fff;background:rgba(0,0,0,.6);border:1px solid var(--line);border-radius:8px;padding:4px 8px}
+.live i{width:6px;height:6px;border-radius:50%;background:#ff3b3b;box-shadow:0 0 8px #ff3b3b;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.room-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.room-body h3{font-family:'Unbounded';font-weight:700;font-size:14px;letter-spacing:.5px;transition:color .25s}
+.room:hover h3{color:var(--gold)}
+.tag{font-size:12px;color:var(--muted);line-height:1.5;min-height:36px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.stat{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:6px 9px;display:flex;flex-direction:column;gap:2px}
+.stat small{font-size:8px;letter-spacing:2px;color:var(--muted);font-weight:700}
+.stat b{font-size:12px;font-weight:700}
+.enter{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;font-family:'Unbounded';font-weight:700;font-size:11px;letter-spacing:1.5px;color:#08040f;text-decoration:none;background:var(--gold);box-shadow:0 5px 0 rgba(0,0,0,.4);transition:.2s}
+.enter:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 7px 0 rgba(0,0,0,.4)}
+.enter:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.4)}
+.hud{margin-left:auto;display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+.hud-box{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:6px 12px;display:flex;flex-direction:column;gap:2px;min-width:96px}
+.hud-box small{font-size:8px;letter-spacing:2px;color:var(--muted);font-weight:700}
+.hud-box b{font-family:'Unbounded';font-weight:700;font-size:14px}
+#balanceVal{color:var(--gold)}
+#balanceVal.weird{color:#ff4d6d;animation:shake .3s infinite}
+@keyframes shake{0%{transform:translate(0,0)}25%{transform:translate(1px,-1px)}50%{transform:translate(-1px,1px)}75%{transform:translate(1px,1px)}100%{transform:translate(0,0)}}
+.balance-box{border-color:rgba(255,201,60,.4);cursor:help}
+.online b{color:var(--cyan)}
+.online .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime);margin-right:5px;animation:blink 1.6s infinite}
+.clock b{color:var(--violet)}
+.ticker{position:relative;z-index:10;overflow:hidden;background:linear-gradient(90deg,var(--pink),var(--violet),var(--cyan));color:#08040f;padding:7px 0;border-block:1px solid rgba(0,0,0,.4)}
+.ticker-track{display:flex;gap:42px;width:max-content;animation:tick 34s linear infinite;font-weight:700;font-size:11px;letter-spacing:1.5px;white-space:nowrap}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(-50%)}}
+.perks{max-width:1460px;margin:26px auto 0;padding:0 20px;display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){.perks{grid-template-columns:1fr}}
+.perk{border:1px solid var(--line);border-radius:16px;padding:16px;background:rgba(255,255,255,.03);display:flex;gap:12px;align-items:flex-start;transition:.25s}
+.perk:hover{border-color:var(--violet);transform:translateY(-3px)}
+.perk .ico{font-size:24px;filter:drop-shadow(0 0 8px rgba(138,92,255,.6))}
+.perk b{font-family:'Unbounded';font-size:11px;letter-spacing:1px;display:block;margin-bottom:6px}
+.perk p{font-size:12px;color:var(--muted);line-height:1.5}
+footer{position:relative;z-index:10;margin-top:44px;border-top:1px solid var(--line);padding:26px 20px 46px;text-align:center;color:var(--muted);font-size:12px;line-height:2}
+footer .fine{font-size:10px;letter-spacing:1px;opacity:.7}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<header class="topbar">
+<div class="logo" id="logo" title="Нажми 3 раза. Если осмелишься.">
+БЕЗУМНЫЙ<span>ПОКЕР</span><small>ЛОББИ · ВХОД ВОСПРЕЩЁН ДОБРОВОЛЬНО</small>
+</div>
+<nav class="tabs">
+<button class="tab active">ЛОББИ</button>
+<button class="tab" data-toast="Касса ушла за чаем. Вернётся никогда.">КАССА</button>
+<button class="tab" data-toast="Настройки сбежали в комнату v3. Им там нравится.">НАСТРОЙКИ</button>
+<button class="tab" data-toast="Поддержка отвечает со скоростью 1 ответ в полнолуние.">ПОДДЕРЖКА</button>
+</nav>
+<div class="hud">
+<div class="hud-box balance-box" id="balanceBox" title="Фишки ненастоящие. Как и друзья."><small>🪙 БАЛАНС</small><b id="balanceVal">—</b></div>
+<div class="hud-box online"><small><span class="dot"></span>ОНЛАЙН</small><b id="onlineVal">—</b></div>
+<div class="hud-box clock"><small>ВРЕМЯ ПО БОЛОТУ</small><b id="clockVal">25:71:00</b></div>
+<button class="snd" id="sndBtn" title="Звук">🔊</button>
+</div>
+</header>
+
+<div class="ticker"><div class="ticker-track" id="tickerTrack">
+<span>🐹 КУРС ХОМЯКОИНА РАСТЁТ</span>
+<span>♥ АДМИНИСТРАЦИЯ НЕСЁТ ОТВЕТСТВЕННОСТЬ ЗА УКРАДЕННЫЕ БАНКИ</span>
+<span>🐔 ПЕТУХ ШАРАХНУЛСЯ ОТ КОТА</span>
+<span>ДИЛЕР УЛЫБАЕТСЯ 7-Й ЧАС ПОДРЯД</span>
+<span>⚠ СТАВКИ ПРИНИМАЕМ ЛУКОМ И ВАЙБАМИ</span>
+<span>👀 ЗА ТОБОЙ СМОТРЯТ. ЭТО НОРМАЛЬНО</span>
+<span>💸 ВЫПЛАТЫ БЫЛИ ВЧЕРА. ВОЗМОЖНО</span>
+<span>🛸 СТОЛ №666 СНОВА ДВИГАЕТСЯ</span>
+</div></div>
+
+<main>
+<section class="hero">
+<h1 class="glitch-title" data-text="ВЫБЕРИ СВОЙ СТОЛ">ВЫБЕРИ СВОЙ СТОЛ</h1>
+<p class="hero-sub">СТОЛ СЛОМАН · КАРТЫ ЖИВЫЕ · ДИЛЕР ДЕРЖИТСЯ</p>
+<p class="hero-note">Регистрация закрыта. Ты уже здесь.</p>
+</section>
+
+<section class="rooms" id="rooms">
+
+<!-- v1 -->
+<article class="room" style="--gold:#ffc93c">
+<div class="room-media">
+<img src="images/v1.jpg" alt="Комната v1 — Безумный покер" loading="eager">
+<div class="media-scan"></div><span class="ver">v1</span><span class="live"><i></i>LIVE</span>
+</div>
+<div class="room-body">
+<h3>«КЛАССИКА БЕЗУМИЯ»</h3>
+<p class="tag">Пики — джокеры. Кот спит на банке. Тётя Зина уже ол-ин.</p>
+<div class="stats">
+<div class="stat"><small>ИГРОКОВ</small><b class="pval">—</b></div>
+<div class="stat"><small>СТАВКИ</small><b>5 / 10</b></div>
+</div>
+<div class="chaos-row"><small>ХАОС</small><div class="chaos"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div></div>
+<a class="enter" href="https://mad-poker.github.io/v1/" target="_blank" rel="noopener">ВОЙТИ В КОМНАТУ <span class="arr">→</span></a>
+</div>
+</article>
+
+<!-- v2 -->
+<article class="room" style="--gold:#25e7ff">
+<div class="room-media">
+<img src="images/v2.jpg" alt="Комната v2 — Петушиная лихорадка" loading="eager">
+<div class="media-scan"></div><span class="ver">v2</span><span class="live"><i></i>LIVE</span>
+</div>
+<div class="room-body">
+<h3>«НЕОНОВЫЙ ХАОС»</h3>
+<p class="tag">Хомяк-аналитик против. Но он хомяк. Синтвейв, бабки, ол-ин на закате.</p>
+<div class="stats">
+<div class="stat"><small>ИГРОКОВ</small><b class="pval">—</b></div>
+<div class="stat"><small>СТАВКИ</small><b>10 / 25</b></div>
+</div>
+<div class="chaos-row"><small>ХАОС</small><div class="chaos"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
+<a class="enter" href="https://mad-poker.github.io/v2/" target="_blank" rel="noopener">ВОЙТИ В КОМНАТУ <span class="arr">→</span></a>
+</div>
+</article>
+
+<!-- v3 -->
+<article class="room" style="--gold:#ff2e88">
+<div class="room-media">
+<img src="images/v3.jpg" alt="Комната v3 — Стол сломан" loading="eager">
+<div class="media-scan"></div><span class="ver">v3</span><span class="live"><i></i>LIVE</span>
+</div>
+<div class="room-body">
+<h3>«ТЁРН И КАША»</h3>
+<p class="tag">Победителей нет. Только те, кто ещё не проиграл. Мозги в кашу.</p>
+<div class="stats">
+<div class="stat"><small>ИГРОКОВ</small><b class="pval">—</b></div>
+<div class="stat"><small>СТАВКИ</small><b>∞ / ∞</b></div>
+</div>
+<div class="chaos-row"><small>ХАОС</small><div class="chaos"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+<a class="enter" href="https://mad-poker.github.io/v3/" target="_blank" rel="noopener">ВОЙТИ В КОМНАТУ <span class="arr">→</span></a>
+</div>
+</article>
+
+<!-- v4 -->
+<article class="room" style="--gold:#58e07c">
+<div class="room-media">
+<img src="images/v4.jpg" alt="Комната v4 — Стол сломан но играем" loading="eager">
+<div class="media-scan"></div><span class="ver">v4</span><span class="live"><i></i>LIVE</span>
+</div>
+<div class="room-body">
+<h3>«СЛОМАННЫЙ СТОЛ»</h3>
+<p class="tag">Карты живые. Дилер держится. Пока. Комикс-стиль, трещина через сукно.</p>
+<div class="stats">
+<div class="stat"><small>ИГРОКОВ</small><b class="pval">—</b></div>
+<div class="stat"><small>СТАВКИ</small><b>1 / 2</b></div>
+</div>
+<div class="chaos-row"><small>ХАОС</small><div class="chaos"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+<a class="enter" href="https://mad-poker.github.io/v4/" target="_blank" rel="noopener">ВОЙТИ В КОМНАТУ <span class="arr">→</span></a>
+</div>
+</article>
+
+</section>
+
+<section class="perks">
+<div class="perk"><span class="ico">🐈</span><div><b>ЧЕСТНОСТЬ</b><p>Кот подтвердил: банки украдены ответственно. Петух шарался, но подписал.</p></div></div>
+<div class="perk"><span class="ico">🪪</span><div><b>ЛИЦЕНЗИЯ</b><p>Выдана болотом №7. Продлению не подлежит. Отзыву — тоже. Смирись.</p></div></div>
+<div class="perk"><span class="ico">💸</span><div><b>ВЫПЛАТЫ</b><p>Вчера™. Всегда вчера. Завтра не предусмотрено регламентом.</p></div></div>
+</section>
+</main>
+
+<footer>
+© 13-й месяц, год ∞ · БЕЗУМНЫЙ ПОКЕР · КУКАРЕКУ · все права украдены<br>
+<span class="fine">администрация не несёт ответственность за украденные банки ♥ ип «болото» · курс хомякоина растёт</span>
+</footer>
+
+<div class="scanlines"></div>
+<div class="vignette"></div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+(function(){
+"use strict";
+/* Fake chip balance */
+var balEl=document.getElementById('balanceVal');
+if(balEl){
+  var bal=Math.floor(5000+Math.random()*85000);
+  function fmt(n){return n.toLocaleString('ru-RU');}
+  function setBal(t){balEl.textContent=fmt(t);}
+  setBal(bal);
+  setInterval(function(){bal=Math.max(-9999,bal+Math.floor(Math.random()*3600-1500));setBal(bal);},5000);
+}
+/* Fake online */
+var onEl=document.getElementById('onlineVal');
+if(onEl){var on=Math.floor(1200+Math.random()*2800);onEl.textContent=on.toLocaleString('ru-RU');setInterval(function(){on=Math.max(1,on+Math.floor(Math.random()*80-35));onEl.textContent=on.toLocaleString('ru-RU');},4000);}
+/* Fake clock */
+var ckEl=document.getElementById('clockVal');
+if(ckEl){function pad(n){return n<10?'0'+n:''+n};setInterval(function(){var d=new Date();ckEl.textContent=pad((d.getHours()+13)%26)+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());},1000);}
+/* Players per room */
+[].slice.call(document.querySelectorAll('.pval')).forEach(function(el){el.textContent=Math.floor(3+Math.random()*60);setInterval(function(){var v=parseInt(el.textContent,10)||5;v=Math.max(1,Math.min(666,v+Math.floor(Math.random()*9-4)));el.textContent=v;},6000);});
+})();
+</script>
+</body>
+</html>
